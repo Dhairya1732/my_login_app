@@ -98,7 +98,6 @@ class LoginPageState extends State<LoginPage> {
                     backgroundColor: const Color.fromARGB(255, 59, 139, 219)),
                 child: const Text(
                   "Log in",
-                  style: TextStyle(),
                 ),
               )),
         ],
