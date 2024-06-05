@@ -11,6 +11,7 @@ class HomePage extends StatelessWidget {
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         body: Center(
             child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text("Home Page"),
             SizedBox(
@@ -22,9 +23,8 @@ class HomePage extends StatelessWidget {
                   },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 59, 139, 219)),
-                  child: const Text(
-                    "Log out",
-                  ),
+                  child: const Text("Log out",
+                      style: TextStyle(color: Colors.white)),
                 )),
           ],
         )),

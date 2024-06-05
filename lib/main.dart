@@ -3,8 +3,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-import 'firebase_options.dart';
-import 'main_page.dart';
+import 'auth/firebase_options.dart';
+import 'auth/main_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

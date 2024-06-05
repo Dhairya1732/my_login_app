@@ -1,26 +1,16 @@
-import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatefulWidget {
+  final VoidCallback showLoginPage;
+  const RegisterPage({super.key, required this.showLoginPage});
   @override
-  LoginPageState createState() => LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-
-  Future signIn() async {
-    FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: _emailController.text.trim(),
-      password: _passwordController.text.trim(),
-    );
-    // Navigator.push(
-    //     context, MaterialPageRoute(builder: (context) => const HomePage()));
-  }
 
   bool isVisible = true;
 
@@ -28,6 +18,12 @@ class LoginPageState extends State<LoginPage> {
     setState(() {
       isVisible = !isVisible;
     });
+  }
+
+  Future signUp() async {
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim());
   }
 
   @override
@@ -45,10 +41,6 @@ class LoginPageState extends State<LoginPage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Image.asset(
-          //   "assets/images/GdscLogo.png",
-          //   scale: 0.8,
-          // ),
           const Center(
             child: Text("Welcome to My App",
                 style: TextStyle(
@@ -84,22 +76,56 @@ class LoginPageState extends State<LoginPage> {
                           icon: isVisible
                               ? const Icon(Icons.visibility_off)
                               : const Icon(Icons.visibility))))),
+          Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: TextFormField(
+                  obscureText: isVisible,
+                  controller: _passwordController,
+                  decoration: InputDecoration(
+                      hintText: "Enter password",
+                      labelText: "Confirm Password",
+                      prefixIcon: const Icon(Icons.lock),
+                      suffixIcon: IconButton(
+                          onPressed: () {
+                            toggle();
+                          },
+                          icon: isVisible
+                              ? const Icon(Icons.visibility_off)
+                              : const Icon(Icons.visibility))))),
           const SizedBox(
-            height: 50,
+            height: 40,
           ),
           SizedBox(
               height: 40,
               width: 200,
               child: ElevatedButton(
                 onPressed: () {
-                  signIn();
+                  signUp();
                 },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 59, 139, 219)),
                 child: const Text(
-                  "Log in",
+                  "Register",
+                  style: TextStyle(color: Colors.white),
                 ),
               )),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                "Registered? ",
+                style: TextStyle(color: Colors.black),
+              ),
+              GestureDetector(
+                onTap: widget.showLoginPage,
+                child: const Text(
+                  "Login Now",
+                  style: TextStyle(color: Colors.blue),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
